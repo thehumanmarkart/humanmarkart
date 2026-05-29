@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FOR THE INTERNET WE LOST</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Supabase CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -425,22 +423,15 @@
                 const { nickname, sizeKey, success } = await response.json();
 
                 if (success && nickname && sizeKey) {
-                    const { data, error } = await _supabase
-                        .from('entries')
-                        .insert([{ nickname, font_size: sizeKey }])
-                        .select();
-
-                    if (!error) {
-                        window.history.replaceState({}, document.title, "/");
-                        fetchEntries();
-                        
-                        const footer = document.getElementById('footer-cta');
-                        const originalFooter = footer.innerHTML;
-                        footer.innerHTML = '<p class="font-meta-label text-primary uppercase tracking-[0.4em] animate-pulse">PRESENCE ARCHIVED</p>';
-                        setTimeout(() => {
-                            footer.innerHTML = originalFooter;
-                        }, 5000);
-                    }
+                    window.history.replaceState({}, document.title, "/");
+                    fetchEntries();
+                    
+                    const footer = document.getElementById('footer-cta');
+                    const originalFooter = footer.innerHTML;
+                    footer.innerHTML = '<p class="font-meta-label text-primary uppercase tracking-[0.4em] animate-pulse">PRESENCE ARCHIVED</p>';
+                    setTimeout(() => {
+                        footer.innerHTML = originalFooter;
+                    }, 5000);
                 }
             } catch (err) {
                 console.error('Verification error:', err);
